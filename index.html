@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Episode KyuuRanger</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Daftar Episode Uchuu Sentai KyuuRanger</h1>
+<ul id="episode-list">
+    <!-- Daftar episode akan diisi di sini -->
+</ul>
+
+<button onclick="window.open('https://krdl.moe/register')">Register</button>
+
+<script>
+    // Ganti URL dengan lokasi file JSON kamu
+    fetch('path/to/episode.json')
+        .then(response => response.json())
+        .then(episodes => {
+            const episodeList = document.getElementById('episode-list');
+            episodes.forEach(episode => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    ${episode.title} 
+                    <button onclick="window.open('https://krdl.moe/download/${episode.title}/${episode.id}/mp4')">Open</button>
+                `;
+                episodeList.appendChild(listItem);
+            });
+        })
+        .catch(error => console.error('Error fetching episode data:', error));
+</script>
+
+</body>
+</html>
+  
