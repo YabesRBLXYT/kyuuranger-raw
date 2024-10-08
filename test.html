@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .episode-link {
+            display: block;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            width: 200px;
+            margin: 0 auto;
+        }
+        .episode-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Episode List</h1>
+    <div id="episode-container"></div>
+
+    <script>
+        // Ambil hash dari URL (misal #1, #2, dst.)
+        const currentEpisode = window.location.hash ? window.location.hash.substring(1) : "1";
+
+        // URL JSON file
+        const jsonUrl = 'test.json';  // Ganti ini jika nama file berbeda
+
+        // Ambil data JSON
+        fetch(jsonUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Cari episode yang sesuai dengan hash (default ke episode 1 jika tidak ada)
+                const episodeData = data.find(episode => episode.episode === currentEpisode);
+                
+                // Jika data ditemukan, tampilkan link
+                if (episodeData) {
+                    const container = document.getElementById('episode-container');
+                    const linkElement = document.createElement('a');
+                    linkElement.href = episodeData.link;
+                    linkElement.className = 'episode-link';
+                    linkElement.innerText = `Download Episode ${episodeData.episode}`;
+                    container.appendChild(linkElement);
+                } else {
+                    alert('Episode not found!');
+                }
+            })
+            .catch(error => console.error('Error fetching JSON:', error));
+    </script>
+</body>
+</html>
